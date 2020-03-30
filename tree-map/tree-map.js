@@ -33,5 +33,33 @@ var Tree = function(value) {
   this.children = [];
 };
 
+// implementation of add method
+Tree.prototype.addChild = function(value){
+  var  child = new Tree(value);
+  this.children.push(child);
+  };
 
 
+
+   
+  Tree.prototype.map = function(mapping){
+    // we should take the first tree value and pass the mapping funtion 
+     // create new tree 
+    var newTree = new Tree(mapping(this.value));
+     //should traverse the tree and operate the mapping by looping over the children.
+    var traverse = function(firstTree, secondTree){
+      if(firstTree.children > 0){
+        for(var i = 0; i < firstTree.children.length; i++){
+          //add the  new value to the new Tree
+          secondTree.addChild(mapping(firstTree.children[i].value));
+          //use recursion to pass to the other children
+           traverse(firstTree.children[i], secondTree.children[i])
+        }
+      }
+    }
+    // apply traverse for the existing tree and the new one 
+      traverse(this, newTree) 
+        // return the new tree
+        return newTree;
+
+  }
